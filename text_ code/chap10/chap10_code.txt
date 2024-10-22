@@ -1,0 +1,99 @@
+# R 10.1.1
+
+health = read.csv("c:/data/rpy/health.csv", header=T)
+plot(health$weight, health$time, pch=19)
+
+pairs(health[,-1], pch=19)
+
+cor(health[,-1])
+
+x <- health[,c(2:5)]
+
+cor(x, health$time)
+
+cor.test(health$weight,health$time)
+
+# Python 10.1.1
+
+import pandas as pd
+import matplotlib.pyplot as plt
+
+health = pd.read_csv("c:/data/rpy/health.csv")
+health.head(3)
+
+plt.scatter(health.weight, health.time)
+plt.title('Scatter plot of (wealth, time)')
+plt.xlabel('weight')
+plt.ylabel('time')
+plt.show()
+
+# Python 10.1.2
+
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+health = pd.read_csv("c:/data/rpy/health.csv")
+
+cols = ['weight','pulse','muscle','quarter','time']
+health2 = health[cols]
+health2.head()
+
+sns.set(style='ticks')
+sns.pairplot(health2)
+
+# R 10.2.1
+
+health = health[,-1]
+fit = lm(time ~ . , data=health)
+summary(fit)
+
+anova(fit)
+
+# R 10.2.2
+
+head(cbind(fitted(fit), residuals(fit)))
+
+confint(fit, level=0.95)
+
+# Python 10.2.1
+
+import pandas as pd
+import matplotlib.pyplot as plt
+import statsmodels.api as sm
+
+health = pd.read_csv("c:/data/rpy/health.csv")
+X_cols = ['weight','pulse','muscle','quarter']
+X = health[X_cols]
+X = sm.add_constant(X)
+Y = health['time']
+X.head(3)
+
+model = sm.OLS(Y,X)
+result = model.fit()
+print(result.summary())
+
+Y_predict = result.predict(X)
+
+Y_predict[0:5]
+
+result.params
+
+# Python 10.2.2
+
+import pandas as pd
+from sklearn.linear_model import LinearRegression
+
+health = pd.read_csv("c:/data/rpy/health.csv")
+X_cols = ['weight','pulse','muscle','quarter']
+X2 = health[X_cols]
+Y = health['time']
+X2.head(3)
+
+sresult = LinearRegression().fit(X2, Y)
+print(sresult.coef_, sresult.intercept_)
+
+
+spredict = sresult.predict(X2)
+spredict[0:5]
+

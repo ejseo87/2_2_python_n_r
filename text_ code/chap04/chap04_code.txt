@@ -1,0 +1,204 @@
+# if.test.r (pp. 77)
+
+if.test <- function(x) { # if-else test
+ if (x %% 2 == 0) {
+    cat("x는 짝수입니다\n")
+ } else if (x %% 2 == 1) {
+          cat("x는 홀수입니다\n")
+        } else { 
+          cat("x는 자연수가 아닙니다\n")
+ } # end if
+} # end function
+
+
+# if_test1.py (pp. 79)
+
+def if_test1 (x) :
+ if (x % 2 == 0) :
+       print ("x는 짝수입니다")
+ else: 
+   if (x % 2 == 1): 
+       print("x는 홀수입니다")
+   else:  
+       print ("x는 자연수가 아닙니다")
+# end function if.test
+
+
+# pp.81 (for r)
+
+sum1 <- 0
+for (x in 1:10) {
+ sum1 <- sum1 + x^2
+}
+print(sum1)
+
+# pp.82 (for py)
+
+mysum = 0
+for x in [1,2,3,4,5,6,7,8,9,10]:
+    mysum = mysum + x**2
+else:
+    print(mysum)
+
+# whiletest1.r (pp.83)
+
+x <- 1
+sum <- 0
+while (x <= 10) {
+ sum <- sum + x^2
+ x <- x + 1
+}
+print(sum)
+
+# whiletest1.py (pp. 84)
+x = 1
+sum = 0
+while (x <= 10): 
+  sum = sum + x**2
+  x = x + 1
+else:
+  print(sum)
+
+# pp. 85
+
+x <- 1:5
+for (j in x) {
+  if (j == 3) next
+   cat(j, " ")
+}
+
+x <- 1:5
+for (j in x) {
+  if (j == 3) break
+   cat(j, " ")
+}
+
+
+## pp. 86
+
+x = range(1,6)
+for j in x:   
+    if (j == 3): continue
+    print(j, " ")
+else: 
+    print("정상적인 반복종료")
+ 
+x = range(1,6)
+for j in x:   
+   if (j == 3): break
+   print(j, " ")
+else: 
+   print("정상적인 반복종료") 
+
+# function_test1.r (pp. 88)
+
+my_sums <- function(a=0, b=10) {
+  data <- a:b
+  sum1 <- 0; sum2 <- 0
+  for (i in data) { 
+    sum1 = sum1 + i
+    sum2 = sum2 + i^2
+  } # end for-loop
+  # sum1 <- sum(a:b); sum2 <- sum((a:b)^2)
+  list(sum1=sum1, sum2 = sum2, n=length(data))
+} # end of function
+
+
+a <- my_sums(1,10)
+mm <- a$sum1 /a$n
+vv <- (a$sum2 -a$n* mm^2)/(a$n-1)
+
+
+## pp. 92
+
+def sum2(x, y):
+  mysum = x + y
+  return(mysum)
+  
+a = int(input("a=")); b=int(input("b="))
+print(a, "와", b, "의 합: ", sum2(a,b)) 
+
+## pp. 92
+
+# function_test1.py
+def my_sums(a=0, b=10):
+  import numpy as np
+  sum1 = 0; sum2 = 0
+  data = np.arange(a,b+1)
+  for i in data: 
+    sum1 = sum1 + i
+    sum2 = sum2 + i**2
+  return sum1, sum2, len(data)
+# end of function my_sums
+  
+# try my_sums(1, 10) ; my_sums(); my_sums(b=100, a=0); my_sums(a=0, b=100)
+  
+a = my_sums(1,10)
+mm = a[0]/a[2]
+vv = (a[1] - a[2]*(mm**2)) / (a[2] - 1)
+
+## pp. 97
+
+class Student:
+    def __init__(self, first, last):
+        self.first = first        
+        self.last = last
+
+    def capital_first(self):
+        return self.first.upper()
+    
+    
+aa =Student('John', 'Doe')    
+bb =Student('Jane', 'Doe')    
+
+>>> aa.first, aa.last
+(‘John’, ‘Doe’)
+>>> bb.first, bb.last
+(‘Jane’, ‘Doe’)
+
+>>> aa.capital_first()
+‘JOHN’
+>>> bb.capital_first()
+‘JANE’
+
+## pp. 98
+
+class StudentGrade(Student):
+        def __init__(self, first, last, score):
+            super().__init__(first,last)
+            self.score =score
+ 
+        def grade(self):
+            if self.score < 80: 
+                grade ='B'
+            else:
+                grade ='A'
+            return grade
+  
+
+>>> aa =StudentGrade('John', 'Doe', 75)    
+>>> bb =StudentGrade('Jane', 'Doe', 95)       
+    
+>>> aa.first, aa.last
+(‘John’, ‘Doe’)
+>>> aa.score, aa.grade()
+(75, ‘B’)
+>>> bb.score, bb.grade()
+(95, ‘A’)
+>>> bb.capital_first()
+‘JANE’
+
+
+class StudentGrade2(Student):
+        def __init__(self, first, last, score):
+            self.first = first        
+            self.last = last
+            self.score =score
+ 
+        def grade2(self):
+            if self.score < 80: 
+                grade ='B'
+            else:
+                grade ='A'
+            return grade
+

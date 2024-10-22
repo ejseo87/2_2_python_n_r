@@ -1,0 +1,149 @@
+# R 11.1.1
+
+cotton = read.csv("c:/data/rpy/cotton.csv", header=T)
+head(cotton)
+
+cotton$pct = as.factor(cotton$pct)
+
+boxplot(tensile ~ pct, data=cotton)
+by(cotton$tensile, cotton$pct, summary)
+
+fit = aov(tensile ~ pct, data=cotton)
+summary(fit)
+
+TukeyHSD(fit)
+
+tukey.test = TukeyHSD(fit)
+plot(tukey.test)
+
+# Python 11.1.1
+
+import pandas as pd
+import researchpy as rp
+
+cotton = pd.read_csv("c:/data/rpy/cotton.csv")
+cotton.head(3)
+
+rp.summary_cont(cotton['tensile'].groupby(cotton['pct']))
+
+#  https://pythonfordatascience.org/anova-python/
+
+# Python 11.1.2
+
+import pandas as pd
+import statsmodels.api as sm
+from statsmodels.formula.api import ols
+
+cotton = pd.read_csv("c:/data/rpy/cotton.csv")
+fit = ols('cotton.tensile ~ C(cotton.pct)', data=cotton).fit()
+fit.summary()
+
+aov_fit = sm.stats.anova_lm(fit, typ=2)
+aov_fit
+
+# Python 11.1.3
+
+import pandas as pd
+import statsmodels.api as sm
+from statsmodels.formula.api import ols
+from statsmodels.stats.multicomp import pairwise_tukeyhsd
+from statsmodels.stats.multicomp import MultiComparison
+
+cotton = pd.read_csv("c:/data/rpy/cotton.csv")
+fit = ols('cotton.tensile ~ C(cotton.pct)', data=cotton).fit()
+mc = MultiComparison(cotton['tensile'], cotton['pct'])
+mc_tukey = mc.tukeyhsd()
+
+print(mc_tukey)
+
+# R 11.2.1.
+
+glass = read.csv("c:/data/rpy/glass.csv", header=T)
+head(glass)
+
+install.packages("car")
+library(car)
+glass$temperature = recode(glass$temperature, "100=1; 125=2; 150=3")
+head(glass)
+
+glass$glass = factor(glass$glass)
+glass$temperature = factor(glass$temperature)
+
+class(glass$glass)
+class(glass$temperature)
+
+fit = aov(strength ~ glass+temperature+glass:temperature, data=glass)
+# fit = aov(strength ~ glass*temperature, data=glass)  # same thing as above
+
+summary(fit)
+
+# R 11.2.2
+
+interaction.plot(glass$glass, glass$temperature, glass$strength)
+
+dev.new()
+interaction.plot(glass$glass, glass$temperature, glass$strength, 
+  type="b", col=c(1:3),leg.bty="o", leg.bg="beige", 
+  lwd=2, pch=c(18,24,22),
+  xlab="glass", ylab="strength of glass",  
+  main="Interaction Plot")
+
+mg = aggregate(glass$strength, list(glass=glass$glass, 
+                  temp=glass$temperature), mean)
+colnames(mg) = c("glass", "temp", "mstr")
+mg
+
+dev.new()
+interaction.plot(mg$glass, mg$temp, mg$mstr, type="b", col=c(1:3),
+  leg.bty="o", leg.bg="beige", lwd=2, pch=c(18,24,22),
+  xlab="glass", ylab="strength of glass",  main="Interaction Plot")
+
+dev.off()
+
+# Python 11.2.1
+
+
+import pandas as pd
+import researchpy as rp
+
+
+glass = pd.read_csv("c:/data/rpy/glass.csv")
+glass.head(2)
+
+rp.summary_cont(glass['strength'])
+
+rp.summary_cont(glass.groupby(['glass']))['strength']
+
+rp.summary_cont(glass.groupby(['temperature']))['strength']
+
+rp.summary_cont(glass.groupby(['glass', 'temperature']))['strength']
+
+# Python 11.2.2
+
+import pandas as pd
+import seaborn as sns
+import statsmodels.api as sm
+from statsmodels.formula.api import ols
+import statsmodels.stats.multicomp
+
+glass = pd.read_csv("c:/data/rpy/glass.csv")
+model = ols('strength ~ C(glass)*C(temperature)', data=glass).fit()
+model.summary()
+
+# Python 11.2.3
+
+import pandas as pd
+import seaborn as sns
+import statsmodels.api as sm
+from statsmodels.formula.api import ols
+import statsmodels.stats.multicomp
+
+glass = pd.read_csv("c:/data/rpy/glass.csv")
+model = ols('strength ~ C(glass)*C(temperature)', data=glass).fit()
+model_anova =  sm.stats.anova_lm(model, typ= 2)
+model_anova
+
+# interaction plot 
+from statsmodels.graphics.factorplots import interaction_plot
+fig = interaction_plot(glass['glass'], glass['temperature'], glass['strength'])
+

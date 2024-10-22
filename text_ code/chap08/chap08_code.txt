@@ -1,0 +1,336 @@
+# R 8.1.1
+
+score = read.csv("c:/data/rpy/score.csv", header=T)
+head(score, 3)
+dim(score)
+score$total = score$midterm + score$final
+head(score, 3)
+sapply(score[,-c(1:2)], mean, na.rm=TRUE)  
+sapply(score[,-c(1:2)], sd, na.rm=TRUE)   
+
+# R 8.1.2
+
+summary(score[,-1])
+class(score$gender)
+class(score$midterm)
+fivenum(score$total)
+
+# R 8.1.3
+
+library(psych)
+describe(score[,-c(1:2)])    
+Dscore = describe(score[,-c(1:2)])
+names(Dscore)
+
+a = c(0, 3, 4, 1, 2, 3, 0, 2, 1, 3, 2, 0, 2, 2, 3, 2, 5, 2, 3, 999)
+library(moments)
+skewness(a)
+kurtosis(a)
+
+
+# Python 8.1.1
+
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+
+score = pd.read_csv("c:/data/rpy/score.csv")
+score.head()
+score.shape
+
+score["total"] = score["midterm"]+score["final"]
+score.head(3)
+score['total'].mean()
+score['total'].std()
+score['total'].median()
+score['total'].quantile(0.75)
+
+# Python 8.1.2
+
+import pandas as pd
+score = pd.read_csv("c:/data/rpy/score.csv")
+score["total"] = score["midterm"]+score["final"]
+
+import collections
+collections.Counter(score[‘gender’])
+cols = ['midterm', 'final', 'total']
+score2 = score[cols]
+score2.head(3)
+score2.describe()
+
+from scipy.stats import skew
+skew(score2)
+
+from scipy.stats import kurtosis
+kurtosis(score2)
+
+from scipy.stats import kurtosis
+
+import numpy as np
+
+a = [0, 3, 4, 1, 2, 3, 0, 2, 1, 3, 2, 0, 2, 2, 3, 2, 5, 2, 3, 999]
+
+a = np.array(a)
+
+skew(a)
+Out[7]: 4.129251496378207
+
+kurtosis(a)
+Out[8]: 15.051426543784178
+
+참고 : sas procedure
+
+data aaa;
+ input a @@ ;
+ datalines;
+ 0 3 4 1 2 3 0 2 1 3 2 0 2 2 3 2 5 2 3 999
+ run;
+ proc univariate  ;
+  var a;
+  run ;
+
+# R 8.2.1
+
+head(score, 3)
+tapply(score$total, score$gender, mean)
+tapply(score$total, score$gender, sd) 
+tapply(score$total, score$gender, length)
+
+xbar = tapply(score$total, score$gender, mean)
+s = tapply(score$total, score$gender, sd)
+n = tapply(score$total, score$gender, length)
+cbind(mean=xbar, stdev=s, n=n)
+
+# R 8.2.2
+
+aggregate(score[c("midterm","final","total")], list(gender=score$gender), mean)
+aggregate(score[c("midterm","final","total")], list(gender=score$gender),sd)
+aggregate(score[c("midterm","final","total")], list(gender=score$gender),length)
+
+# R 8.2.3
+
+by(score[,3:5], score$gender, summary)
+
+# R 8.2.4
+
+library(psych)
+describeBy(score[,c(3:5)], score$gender)
+
+# Python 8.2.1
+
+import pandas as pf
+score = pd.read_csv("c:/data/rpy/score.csv")
+score["total"] = score["midterm"]+score["final"]
+gstat = score.groupby("gender")['total'].describe()
+gstat
+
+gstat["mean"]
+
+gstat["std"]
+
+gstat["25%"]
+
+# Python 8.2.2
+
+import pandas as pf
+
+score = pd.read_csv("c:/data/rpy/score.csv")
+score["total"] = score["midterm"]+score["final"]
+
+gstat_total = score.groupby("gender")['total']
+gstat_total.agg(['size','mean','std','min','max'])
+
+gresult = gstat_total.agg(['size','mean','std','min','max'])
+
+gresult.loc['f']
+gresult.loc['m']
+
+# Python 8.2.3
+
+import researchpy as rp
+import pandas as pd
+
+score = pd.read_csv("c:/data/rpy/score.csv")
+score["total"] = score["midterm"]+score["final"]
+
+rp.summary_cont(score['total'])
+rp.summary_cont(score.groupby(['gender'])['total'])
+
+
+a = rp.summary_cont(score.groupby(['gender'])['total']) 
+a['Mean']
+
+# R 8.3.1
+
+stem(score$final)
+stem(score$total)
+
+stem(score$total, scale=2)  
+
+# R 8.3.2
+
+library(aplpack)
+maleScore = score$total[score$gender=="m"]
+femaleScore = score$total[score$gender=="f"]
+stem.leaf.backback(maleScore, femaleScore)
+
+median(maleScore)
+median(femaleScore)
+
+# R 8.3.3
+
+par(mfrow=c(1,2))
+
+boxplot(total ~ gender, data=score)
+title("boxplot : total~gender")
+
+boxplot(female.score, male.score)
+title("boxplot: variables") 
+
+# R 8.3.4
+
+par(mfrow=c(2,1))
+
+hist(male.score)
+hist(female.score, col="grey")
+
+# Python 8.3.1
+
+# install stemgraphic module
+# pip install stemgraphic (in Dos)
+import pandas as pd
+import stemgraphic
+
+score = pd.read_csv("c:/data/rpy/score.csv")
+score["total"] = score["midterm"]+score["final"]
+stemgraphic.stem_graphic(score.total, scale=10)
+
+# Python 8.3.2
+
+import pandas as pd
+import seaborn as sns
+score = pd.read_csv("c:/data/rpy/score.csv")
+score["total"] = score["midterm"]+score["final"]
+
+sns.set(style="whitegrid")
+sns.boxplot(x="total", data=score)
+
+sns.boxplot(y="total", data=score)
+scorebox = sns.boxplot(x="gender", y="total", data=score) 
+
+# Python 8.3.3
+
+import pandas as pd
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+score = pd.read_csv("c:/data/rpy/score.csv")
+score["total"] = score["midterm"]+score["final"]
+plt.hist(score.total)
+
+ftotal = score.loc[score.gender =='f', 'total']
+mtotal = score.loc[score.gender =='m', 'total']
+
+args = dict(alpha=0.5, bins=10)
+plt.hist(ftotal,  **args, color='b', label='female')
+plt.hist(mtotal,  **args, color='r', label='male')
+plt.gca().set(title='Frequency Histogram of Score.total', ylabel='Frequency')
+plt.legend()
+plt.show()
+
+# https://www.machinelearningplus.com/plots/matplotlib-histogram-python-examples/
+
+# R 8.4.1
+
+# Read data : enqete.csv 
+enqete <- read.csv("c:/data/rpy/enqete.csv", header=T)
+head(enqete, 3)
+
+# frequency 
+table(enqete$grade)   
+
+grade.freq = table(enqete$grade)
+names(grade.freq) = c("gr1", "gr2", "gr3", "gr4")
+grade.freq
+
+par(mfrow=c(1,2))
+barplot(grade.freq)                              
+pie(grade.freq)
+
+# R 8.4.2
+
+# Contingency table
+table(enqete$grade, enqete$q1)    
+
+enqete[enqete==0] = NA
+enqete = na.omit(enqete)
+table(enqete$grade,enqete$q1)  
+
+college = table(enqete$grade, enqete$q1)            
+colnames(college) = c("ans1", "ans2")
+rownames(college) = c("grade1","grade2","grade3","grade4")
+college
+
+names(dimnames(college)) = c("Grade", "Answer")
+college
+
+# R 8.4.3
+
+xtabs(~grade+q1, data=enqete)
+
+par(mfrow=c(1,2))                            
+barplot(college)                               
+barplot(t(college), legend=c("ans1", "ans2"))
+
+chisq.test(college)
+
+# Python 8.4.1
+
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+
+enqete = pd.read_csv("c:/data/rpy/enqete.csv")
+enqete.head(3)
+
+enqete_table = pd.crosstab(index=enqete["grade"], colnames=["Grade"],  columns="count")
+print(enqete_table)
+
+enqete_table.index = ["1학년", "2학년", "3학년", "4학년"]
+print(enqete_table)
+
+# Python 8.4.2
+
+import pandas as pd
+grade_q1 = pd.crosstab(index=enqete["grade"], columns=enqete["q1"])
+grade_q1.index = ["1학년", "2학년", "3학년", "4학년"]
+grade_q1
+
+import pandas as pd
+grade_q1 = pd.crosstab(index=enqete["grade"], columns=enqete["q1"])
+grade_q1.index = ["1학년", "2학년", "3학년", "4학년"]
+grade_q1
+
+from scipy.stats import chi2_contingency
+chi2_contingency(grade_q1)
+
+# Python 8.4.3
+
+import pandas as pd
+import matplotlib.pyplot as plt
+
+enqete = pd.read_csv("c:/data/rpy/enqete.csv")
+enqete_table = pd.crosstab(index=enqete["grade"], colnames=["Grade"],  columns="count")
+enqete_table.index=["Gr1", "Gr2", "Gr3", "Gr4"]
+plt.bar(enqete_table.index, enqete_table["count"])
+# enqete_table["count"].plot.bar()  : Same bar plot 
+
+plt.pie(enqete_table["count"], labels=enqete_table.index, shadow=True,  startangle=90)
+
+grade_q1.index=["Gr1", "Gr2", "Gr3", "Gr4"]
+grade_q1.plot.bar(stacked=True)
+plt.legend(title='Question1')
+plt.show()
+
+
+

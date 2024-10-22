@@ -1,0 +1,22 @@
+강의때 사용한 데이터 파일입니다.
+
+다운로드 받아 이용하세요.
+
+"c:\data\pydata" 에 설치한 경우 ﻿﻿﻿﻿﻿
+
+1. R 에서
+
+  > setwd("c:/data/pyata")
+  > getwd()
+  > boston <- read.csv("Boston.csv")
+  > head(boston)
+
+2. Python 에서 
+
+ >>> import os
+ >>> import pandas as pd
+ >>> os.chdir("c:/data/pydata")
+ >>> os.getcwd()
+ >>> boston = pd.read_csv("Boston.csv")
+ >>> boston.head()
+

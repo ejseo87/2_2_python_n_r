@@ -1,0 +1,211 @@
+# 4 리스트
+
+a = [1,2,3,4,5]
+print(a)    # [1,2,3,4,5]
+len(a)      #  5
+a[0]         # 1
+a[4]         # 5
+a[4] = 99  
+print(a)    # [1,2,3,4,99]
+a[0:2]       # [1,2]
+a[1:]         # [2,3,4,99]
+a[:3]         # [1,2,3]
+a[:-1]        # [1,2,3,4]
+a[:-2]        # [1,2,3] 
+
+
+#5 Dictionary
+
+me = {‘height’ : 180, ‘weight’: 70}
+me[‘height’]      # 180
+me[‘weight’]     # 70
+me['age'] = 30  # 새 원소 추가 
+print(me) 
+{'height': 180, 'weight': 70, 'age': 30}
+
+# 참고: 1장 desc0.py
+import pandas as pd
+import numpy as np
+#Create a Dictionary of series
+d = {'Name':pd.Series(['Tom','James','Ricky','Vin','Steve','Smith','Jack',
+   'Lee','David','Gasper','Betina','Andres']),
+   'Age':pd.Series([25,26,25,23,30,29,23,34,40,30,51,46]),
+   'Rating':pd.Series([4.23,3.24,3.98,2.56,3.20,4.6,3.8,3.78,2.98,4.80,4.10,3.65])}
+#Create a DataFrame
+df = pd.DataFrame(d)
+print (df)
+df.head()
+
+#6 bool
+hungry = True
+sleepy = False
+type(hungry)     # bool
+not hungry       #  False
+hungry and sleepy   # False
+hungry or sleepy     # True
+
+#7 if
+hungry = True
+
+if hungry :
+    print("I'm hungry")
+
+hungry = False
+
+if hungry :
+    print("I'm hungry")
+else:
+    print("I'm not hungry")
+    print("I'm sleepy")
+
+
+#8 for
+
+for i in [1,2,3]:
+    print(i)
+
+name = ['a', 'b', 'c', 'd', 'e']
+for i in name:
+    print(i)
+
+sum = 0
+for i in range(10) :
+    sum = sum+i
+
+print(sum)
+
+
+#9 function
+
+def hello():
+    print("Hello World !")
+    print("Welcome to Python class !")
+    
+hello()
+
+def hello2(object):
+    print("Hello " + object + " !")
+
+
+hello2("Jang")
+
+#10 class
+class Man:
+    def __init__(self, name):
+        self.name = name
+        print("Initialized !")
+    def hello(self):    
+        print("Hello " + self.name + " !")
+    def goodbye(self):    
+        print("Good-bye " + self.name + " !")
+        
+m = Man("David")
+m.hello()
+m.goodbye()
+
+
+class Person:
+    def __init__(self, name, age):
+        self.name=name
+        self.age=age
+    def disp(self):    
+        print(self.name)
+        print(self.age)        
+
+p1=Person('홍길동', 22)
+p2=Person('철수', 35)
+
+p1.disp()
+p2.disp()
+
+class Person2:
+    def __init__(self):
+        self.name=input('Name:')
+        self.age=int(input('Age:'))
+    def disprint(self):    
+        print('Name = ', self.name)
+        print('Age =', self.age)
+
+customer=[ ]
+for i in range(5):
+    customer.append(Person2())
+
+customer[0].disprint()
+customer[1].disprint()
+
+#11 numpy
+import numpy as np
+x = np.array([1.0, 2.0, 3.0])
+print(x)    # [1. 2. 3.]
+type(x)    # numpy.ndarray
+
+y = x/3
+print(y)     # [0.33333333 0.66666667 1. ]
+x = np.array([1.0, 2.0, 3.0])
+y = np.array([2.0, 4.0, 6.0])
+x+y     # array([3., 6., 9.])
+x-y      # array([-1., -2., -3.])
+x*y      # array([ 2.,  8., 18.])
+x/y      # array([0.5, 0.5, 0.5])
+
+#12 numpy - n dimension
+import numpy as np
+A = np.array([[5,7], [9,11]])
+print(A)
+A[0]      # array([5, 7])
+A[1]      # array([ 9, 11])
+A[0,0]    #  5  - A[0][0]   
+A[1,0]    #  9  - A[1][0]
+B = np.array([[3,0],[0,6]])
+A+B     
+A*B
+
+#13 Broadcast
+import numpy as np
+A = np.array([[1,2], [3,4]])
+B = np.array([10,20])
+C = 10
+A*B
+A*C
+
+#14 indexing
+
+X = np.array([[51,55],[14,19],[0,4]])
+print(X)
+X[0]
+x[0][1]
+
+for row in X:
+    print(row)
+
+Y = X.flatten()
+print(Y)
+
+Y>15
+Y[Y>15]
+
+#15 matplotlib
+import matplotlib.pyplot as plt
+import numpy as np
+x = np.arange(0, 6, 0.1)
+y = np.sin(x)
+plt.plot(x,y)
+plt.show()
+
+x = np.arange(0, 6, 0.1)
+y1 = np.sin(x)
+y2 = np.cos(x)
+plt.plot(x,y1, label='sin')
+plt.plot(x, y2, linestyle='-', label='cos')
+plt.xlabel('x-axis')
+plt.ylabel('y-axis')
+plt.title('sin & cos')        
+plt.legend()
+plt.show()
+
+
+
+
+
+
+

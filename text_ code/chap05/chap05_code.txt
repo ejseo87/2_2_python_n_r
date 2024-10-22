@@ -1,0 +1,282 @@
+
+# p. 106 
+## birthyear.r
+birthyear <- function() {
+  age <- readline(prompt="Enter age: ")
+  curyear <- as.numeric( format(Sys.Date(), "%Y") )
+  b.year <- curyear-as.numeric(age)
+  list(born.year=b.year)
+}
+
+# p.107
+
+import datetime as dt
+
+def birthyear():
+  age = input("Enter age: ")
+  now = dt.datetime.now()
+  curyear = now.year
+  b_year = curyear-int(age)
+  print("born.year= ", b_year)
+
+birthyear()
+
+# p.110
+
+myiris <- read.table("K:\\HWP\\books\\PR4DS\\iris.txt", header=T)
+myiris <- read.table("K:/HWP/books/PR4DS/iris.txt", header=T)
+myiris <- read.table(file.choose(), header=T)
+myiris <- read.table(url("http://jupiter.hallym.ac.kr/ftpdata/data/iris.txt"), 
+           skip=9, 
+           col.names=c("No", "SepalLength"," SepalWidth","PetalLength","PetalWidth","Species"))
+
+myiris <- read.table("http://jupiter.hallym.ac.kr/ftpdata/data/iris.txt", 
+           skip=9, 
+           col.names=c("No", "SepalLength"," SepalWidth","PetalLength","PetalWidth","Species"))
+
+head(myiris)
+tail(myiris)
+
+##############
+
+
+# p. 113
+# fileio0.py
+import pandas as pd
+
+df1 = pd.read_csv('e:/data/pyandr/score.txt', sep=" ", header=0, encoding='utf-8')
+df2 = pd.read_csv('e:/data/pyandr/score.csv', header=0, encoding='cp949')
+df3 = pd.read_csv('e:/data/pyandr/score.csv', header=0, encoding='euc-kr')
+print(df1.head(3))
+print(df2.head(3))
+print(df3.tail(3))
+print(type(df1))
+# 다음은 인코딩 오류에 의한 에러
+# df1 = pd.read_csv('e:/data/pyandr/score.txt', header=0, encoding='cp949')
+# df3 = pd.read_csv('e:/data/pyandr/score.csv', header=0, encoding='utf-8')
+
+# 첫 번째 행을 읽지 않아 보기
+df4 = pd.read_csv('import pandas as pd
+
+df1 = pd.read_csv('e:/data/pyandr/score.csv', skiprows=1, encoding='euc-kr')
+# 아래 결과에서 첫 번째 자료값이 열이름이 됨.
+print(df4)
+
+# 열의 일부만 읽기
+df5 = pd.read_csv('e:/data/pyandr/score.csv', header=0, encoding='euc-kr',
+                 usecols=['english', 'name', 'korean', 'math'])
+print(df5.head(3))
+# 열의 순서 바꾸기
+df6 = pd.read_csv('e:/data/pyandr/score.csv', header=0, encoding='euc-kr',
+                  usecols=['english', 'name', 'korean', 'math'])[['english', 'korean',
+                               'math', 'name']]
+print(df6.head(3))
+
+df7 = pd.read_csv('e:/data/pyandr/score.txt', sep=" ", index_col='name')
+print(df7)
+print(df7.loc['강대성'])
+
+# p. 116
+# write.table in r
+
+write.table(mtcars, "")
+write.table(mtcars, "", row.names=F, quote=F)
+write.table(mtcars, "e:/data/pyandr/mtars.csv", row.names=T, quote=F, sep=",",
+         fileEncoding="UTF-8")
+
+write.table(mtcars, file.choose(), quote=F, sep=",")
+
+#p. 119
+from pandas import DataFrame
+
+cars = {'make': ['Hyundai','Kia','Ford','Chevrolet'],
+        'model': ['Sonata', 'K5', 'Taurus', 'Impala'],
+        'price':  [3200,3100,3500,3700]         }
+
+df = DataFrame(cars)
+write_txt = df.to_csv (r'e:/data/pyandr/cars.txt',  sep = " ", 
+                        index = True, header=True) 
+
+f=open("e:/data/pyandr/cars.csv","w")
+write_csv = df.to_csv (f,  sep = ",", index = None, header=True) 
+f.close()
+print (df)
+
+
+# p. 121
+# install.packages('readxl')
+library(readxl)
+# 전체 읽기
+read_excel(path="e:/data/pyandr/bmi.xlsx", sheet=1, 
+      col_names=c("height", "weight", "year", "religion", "gender", "marriage"))
+# A1:C10 영역만 읽기
+read_excel(path="e:/data/pyandr/bmi.xlsx", sheet=1, 
+          range=("A1:C10"), col_names=c("height", "weight", "year"))
+# 몸무게와 성별만 읽기
+read_excel(path="e:/data/pyandr/bmi.xlsx", sheet=1, 
+      col_names=c("height", "weight", "year", "religion", "gender", "marriage"),
+      col_types=c("skip", "numeric", "skip", "skip", "text", "skip"))
+
+####################
+# install.packages("xlsx")
+library(xlsx)
+read.xlsx(file="e:/data/pyandr/bmi.xlsx", sheetIndex=1)
+ 
+name <- c("강대성", "한준호", "김종욱", "박상호", "김소현")
+number <- c(87, 73, 53, 65, 69)
+df <- data.frame(name, number)
+ 
+write.xlsx(df, "e:/data/pyandr/scorebyR.xlsx", 
+    sheetName="data", row.names=FALSE)
+
+# p. 124
+import pandas as pd
+
+data = pd.read_excel (r'e:/data/pyandr/height.xlsx', header=None, 
+                      names=['height','gender']) 
+df1 = pd.DataFrame(data)
+print(df1)
+
+
+data = pd.read_excel ('http://jupiter.hallym.ac.kr/ftpdata/data/bmi.xlsx',
+                     index_col=2) 
+df2 = pd.DataFrame(data) #, columns= ['Product','Price'])
+print(df2)
+
+cars = {'make': ['Hyundai','Kia','Ford','Chevrolet'],
+        'model': ['Sonata', 'K5', 'Taurus', 'Impala'],
+        'price':  [3200,3100,3500,3700] }
+df3 = pd.DataFrame(cars)
+export_excel = df3.to_excel (r'e:/data/pyandr/cars.xlsx', 
+  index = None, header=True) #Don't forget to add '.xlsx' at the end of the path
+
+# p. 127
+a <- "abc"
+nchar(a)
+xx <- strsplit(a, split="")
+xx
+strsplit("abcabab", split="b")
+paste(a, "ABC", sep="")
+rep(a, 5)
+
+# p.128
+a = "abc"
+print(len(a))
+print(a[1])
+
+x,y,z = a
+
+print(x)
+
+# p. 129
+bb = 'A test string'
+blist0 = bb.split()
+blist1 = bb.split('i')
+print(blist0, blist1)
+
+aa = a +"ABC"
+print(aa)
+aaa = a * 3
+print(aaa)
+
+# p. 130
+a = "abcdefgabcab"
+substr(a, 4, 7)
+regexpr('a', a, fixed=T, useB=F)[1]
+unlist(gregexpr('a', a, fixed=T, useB=F))
+
+strvec <- c("Abc", "bcd", "cdef", "defg")
+grep("b",strvec) 
+grepl("b",strvec) 
+
+
+sub('a', "AA", a)
+gsub('a', "AA", a)
+
+#p. 132
+mystr = 'abcdeabcab'
+n0 = mystr.count('ab')
+n1 = mystr.find('ab')
+n2 = mystr.rfind('ab')
+newstr = mystr.replace('ab', 'AB')
+print(n0, n1, n2, newstr)
+
+
+# p. 133
+
+
+gsub('\\[', 'A',  '[12.5+13-1*5$')
+gsub('\\+', 'A',  '[12.5+13-1*5$')
+gsub('\\$', 'A',  '[12.5+13-1*5$')
+
+
+sub('[a-z]','-', 'bcde0123ABC')
+gsub('[a-z]','-', 'bcde0123ABC')
+
+
+# p. 134
+import re
+
+mystr = re.sub('\\[', 'A',  '[12.5+13-1*5$')
+print(mystr)
+
+mystr = re.sub('[a-z]', '-',  'bcde0123ABC')
+print(mystr)
+
+l_case = re.search('[a-z]', 'bcde0123ABC')
+if l_case: print('a-z exits')
+else: print('No a-z')
+
+l_case = re.search('[k-z]', 'bcde0123ABC')
+if l_case: print('k-z exists')
+else: print('No k-z')
+
+sub('colou?r', 'COLOR', c('color', 'coloor', 'colooor', 'colour', 'colouur')) 
+sub('colo*r', 'COLOR', c('color', 'coloor', 'colooor', 'colour', 'colouur')) 
+sub('colo+r', 'COLOR', c('color', 'coloor', 'colooor', 'colour', 'colouur')) 
+sub('colo{3}r', 'COLOR',  c('color', 'coloor', 'colooor', 'colour', 'colouur')) 
+sub('colo{1,3}r', 'COLOR',  c('color', 'coloor', 'colooor', 'colour', 'colouur')) 
+sub('colo{2,}r', 'COLOR',  c('color', 'coloor', 'colooor', 'colour', 'colouur')) 
+
+
+sub('a.b', 'A.B',  c('ab', 'abb', 'abbb', 'axb', 'axxxxb')) 
+sub('a.*b', 'A.B',  c('ab', 'abb', 'abbb', 'axb', 'axxxxb')) 
+
+sub('grey|gray', 'GRAY',  c('grey', 'gray', 'groy', 'greay', 'greey')) 
+sub('gr(a|e)y', 'GRAY',  c('grey', 'gray', 'groy', 'greay', 'greey'))   
+
+
+sub('^1', '-', c('12.5', 'ab', 'abc', ''))
+sub('[^0-9]', '-', c('12.5', 'ab', 'abc', ''))
+sub('b$', '-', c('12.5', 'ab', 'abc', ''))
+sub('^$', '-', c('12.5', 'ab', 'abc', ''))
+
+
+mystr =  [re.sub('grey|gray', 'GRAY',  word) for word in 
+     ['grey', 'gray', 'groy', 'greay', 'greey']]
+print(mystr)
+
+mystr=[re.sub('gr(a|e)y', 'GRAY', word) for word in
+       ['grey', 'gray', 'groy', 'greay', 'greey']]
+print(mystr)
+
+
+참고 : 데이터 작업영역 설정
+
+데이터를 "c:\data\pyandr" 에 설치한 경우 ﻿﻿﻿﻿﻿
+
+1. R 에서
+
+  > setwd("c:/data/pyandr")
+  > getwd()
+  > boston <- read.csv("Boston.csv")
+  > head(boston)
+
+2. Python 에서 
+
+ >>> import os
+ >>> import pandas as pd
+ >>> os.chdir("c:/data/pyandr")
+ >>> os.getcwd()
+ >>> boston = pd.read_csv("Boston.csv")
+ >>> boston.head()

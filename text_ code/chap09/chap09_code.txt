@@ -1,0 +1,108 @@
+# R 9.1.1
+
+crab = scan("c:/data/rpy/crab.txt")
+crab
+t.test(crab, mu=24.3)
+
+# Python 9.1.1
+
+import pandas as pd
+import numpy as np
+f = open("c:/data/rpy/crab.txt", "r")
+crab = f.read()
+print(crab)
+
+type(crab)
+
+crab = crab.split()
+print(crab)
+
+fcrab = [float(x) for x in crab]
+fcrab[0:5]
+
+from scipy import stats
+crab_ttest = stats.ttest_1samp(fcrab,24.3)
+crab_ttest
+print("T-value = %.3f , p-value =  %.3f" % crab_ttest)
+
+# in lecture 13
+
+crab = pd.read_csv("c:/data/rpy/crabpy.txt", header=None)
+crab_ttest = stats.ttest_1samp(crab,24.3)
+crab_ttest
+
+print("T-value = %.3f , p-value =  %.3f" % crab_ttest)
+
+print("T-value = %.3f" % crab_ttest[0]," p-value =  %.3f" % crab_ttest[1])
+
+# R 9.2.1
+
+drug = read.csv("c:/data/rpy/drug.csv", header=T)
+drug[c(1,7),]
+
+t.test(time ~ drug, data=drug)
+
+# R 9.1.1
+
+var.test(time~drug, data=drug)
+t.test(time ~ drug, var.equal=TRUE, data=drug)
+
+# Python 9.2.1
+
+import pandas as pd
+from scipy import stats
+
+drug = pd.read_csv("c:/data/rpy/drug.csv")
+drug.columns
+Out: Index(['drug', 'time'], dtype='object')
+
+drugB = drug.loc[drug.drug=='B', 'time']
+drugG = drug.loc[drug.drug=='G', 'time']
+# drugB = drug[drug.drug=='B'].time      : same above
+# drugG = drug[drug.drug=='G'].time      : same above
+
+drug_ttest = stats.ttest_ind(drugB, drugG, equal_var=False)
+drug_ttest
+
+print("Not assuming equal variances : t-value = %.3f, p-value = %.3f " % drug_ttest)
+
+# Python 9.2.2
+
+
+import pandas as pd
+from scipy import stats
+
+drug = pd.read_csv("c:/data/rpy/drug.csv")
+drugB = drug.loc[drug.drug=='B', 'time']
+drugG = drug.loc[drug.drug=='G', 'time']
+
+stats.bartlett(drugB, drugG)
+
+stats.levene(drugB, drugG)
+
+drug_ttest = stats.ttest_ind(drugB, drugG, equal_var=True)
+
+print("Assuming equal variances : t-value = %.3f, p-value = %.3f " % drug_ttest)
+
+# R 9.3.1
+
+deer = read.csv("c:/data/rpy/deer.csv", header=T)
+head(deer, 3)
+
+t.test(deer$hleg, deer$fleg, paired=TRUE)
+
+# Python 9.3.1
+
+import pandas as pd
+from scipy import stats
+
+deer = pd.read_csv("c:/data/rpy/deer.csv")
+deer.head()
+
+# perform paired t-test
+deer_pttest = stats.ttest_rel(deer.hleg, deer.fleg)
+deer_pttest
+
+print("T-value = %.3f , p-value = %.3f" % deer_pttest)
+
+
