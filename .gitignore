@@ -1,0 +1,7 @@
+output/
+Rfolder/
+rpy/
+rpython/
+text_code/
+.ipynb_checkpoints/
+*.ipynb
