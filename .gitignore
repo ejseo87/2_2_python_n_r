@@ -4,3 +4,4 @@ rpy/
 rpython/
 .ipynb_checkpoints/
 *.ipynb
+.Rproj.user
