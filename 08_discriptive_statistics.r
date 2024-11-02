@@ -1,4 +1,3 @@
-library(dplyr)
 score <- read.csv("score.csv", header = TRUE)
 head(score, 3)
 dim(score)

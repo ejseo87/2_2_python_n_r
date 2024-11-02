@@ -5,3 +5,5 @@ rpython/
 .ipynb_checkpoints/
 *.ipynb
 .Rproj.user
+midterm.r
+midterm.py
